@@ -29,6 +29,7 @@ def evaluate(model, train_user_dict, test_user_dict, user_ids_batches, item_ids,
     n_users = len(test_user_dict.keys())
     item_ids_batch = item_ids.cpu().numpy()
 
+
     cf_scores = []
     precision = []
     recall = []

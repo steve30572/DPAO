@@ -4,6 +4,7 @@ import torch.nn.functional as fn
 
 from recbole.model.init import xavier_normal_initialization
 
+
 ##CFGenrator에서는 config 를 args로 바꾸기? raw_neighbor_relations 가 뭔지 알아내기
 class CFGenerator(nn.Module):
 

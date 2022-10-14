@@ -136,6 +136,7 @@ def train(args):
     if use_cuda:
         item_ids = item_ids.to(device)
 
+
     # construct model & optimizer
 
     model = KGAT(args, data.n_users, data.n_items, data.n_entities, data.n_relations, user_pre_embed, item_pre_embed)

@@ -4,6 +4,7 @@ import csv
 from collections import OrderedDict
 
 
+
 def create_log_id(dir_path):
     log_count = 0
     file_path = os.path.join(dir_path, 'log{:d}.log'.format(log_count))

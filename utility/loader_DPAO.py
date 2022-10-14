@@ -39,6 +39,7 @@ class DataLoaderKGAT(object):
             self.load_pretrained_data()
 
 
+
     def load_cf(self, filename):
         user = []
         item = []

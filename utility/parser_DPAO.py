@@ -7,6 +7,7 @@ def parse_kgat_args():
     parser.add_argument('--local_rank', type=int, default=0,
                         help='Local rank for using multi GPUs.')
 
+
     parser.add_argument('--seed', type=int, default=123,
                         help='Random seed.')
 

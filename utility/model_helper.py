@@ -33,6 +33,7 @@ def early_stopping(recall_list, stopping_steps):
     return best_recall, should_stop
 
 
+
 def save_model(model, model_dir, current_epoch, last_best_epoch=None):
     if not os.path.exists(model_dir):
         os.makedirs(model_dir)

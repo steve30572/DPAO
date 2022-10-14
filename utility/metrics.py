@@ -50,6 +50,7 @@ def dcg_at_k(rel, k):
     return dcg
 
 
+
 def ndcg_at_k(rel, k):
     """
     calculate normalized discounted cumulative gain (ndcg)

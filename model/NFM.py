@@ -3,6 +3,7 @@ from torch import nn
 from torch.nn import functional as F
 
 
+
 class HiddenLayer(nn.Module):
 
     def __init__(self, in_dim, out_dim, dropout):

@@ -504,6 +504,7 @@ class Double_DQN(object):
                 self.optimizer.zero_grad()
                 loss = self.KGAT('calc_cf_loss', g, i[0], i[1], i[2], i[3], i[4], i[5])
 
+
                 loss.backward()
                 self.optimizer.step()
                 self.optimizer.zero_grad()

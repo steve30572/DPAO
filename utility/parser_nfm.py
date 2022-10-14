@@ -4,6 +4,7 @@ import argparse
 def parse_nfm_args():
     parser = argparse.ArgumentParser(description="Run NFM.")
 
+
     parser.add_argument('--seed', type=int, default=123,
                         help='Random seed.')
 

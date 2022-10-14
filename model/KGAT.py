@@ -222,6 +222,7 @@ class KGAT(nn.Module):
         # print(temp_emb.shape)
         return temp_emb, torch.stack(result)
 
+
         ### original code
         ego_embed = self.entity_user_embed(g.ndata['id'])
         all_embed = [ego_embed]
