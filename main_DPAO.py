@@ -88,10 +88,10 @@ def train(args):
     #    pickle.dump(data, outp, pickle.HIGHEST_PROTOCOL)
     # exit(0)
 
-    with open('0909_yelp_new_data.pkl', 'rb') as inp:
-       data = pickle.load(inp)
+    # with open('0909_yelp_new_data.pkl', 'rb') as inp:
+    #    data = pickle.load(inp)
 
-    #data = DataLoaderKGAT(args, logging)
+    data = DataLoaderKGAT(args, logging)
 
     if args.use_pretrain == 1:
         user_pre_embed = torch.tensor(data.user_pre_embed)
@@ -142,7 +142,7 @@ def train(args):
     test_graph.ndata['id'] = test_nodes
     test_graph.edata['type'] = test_edges
     model.hop(train_graph)
-    for i in range(200): #need to be parameter changed --HS
+    for i in range(200):
         with torch.no_grad():
             att = model('calc_att', train_graph)
         train_graph.edata['att'] = att
@@ -179,14 +179,6 @@ def train(args):
     recall_list = []
     ndcg_list = []
 
-    # # action_for_user = torch.load('./99' + args.data_name + 'user_index.pt')
-    # # action_for_item = torch.load('./99' + args.data_name + 'item_index.pt')
-    # # action_for_user = torch.randint(0, 4, action_for_user.shape)
-    # # action_for_item = torch.randint(0, 4, action_for_item.shape)
-    # torch.save(action_for_user, './' + str(i) + args.data_name + 'user_index.pt')
-    # torch.save(action_for_item, './' + str(i) + args.data_name + 'item_index.pt')
-    # print(torch.bincount(action_for_user))
-    # print(torch.bincount(action_for_item))
     # train model
     for epoch in range(args.n_epoch + 1):
         time0 = time()

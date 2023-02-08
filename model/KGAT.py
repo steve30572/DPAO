@@ -40,11 +40,6 @@ class Aggregator(nn.Module):
         g = g.local_var()
         g.ndata['node'] = entity_embed
 
-        # Equation (3) & (10)
-        # DGL: dgl-cu90(0.4.1)
-        # Get different results when using `dgl.function.sum`, and the randomness is due to `atomicAdd`
-        # Use `dgl.function.sum` when training model to speed up
-        # Use custom function to ensure deterministic behavior when predicting
         if type == 1:
             out = self.activation(self.W(g.ndata['node']))
         else:
@@ -55,16 +50,16 @@ class Aggregator(nn.Module):
 
             if self.aggregator_type == 'gcn':
                 # Equation (6) & (9)
-                out = self.activation(self.W(g.ndata['node'] + g.ndata['N_h']))                         # (n_users + n_entities, out_dim)
+                out = self.activation(self.W(g.ndata['node'] + g.ndata['N_h']))
 
             elif self.aggregator_type == 'graphsage':
                 # Equation (7) & (9)
-                out = self.activation(self.W(torch.cat([g.ndata['node'], g.ndata['N_h']], dim=1)))      # (n_users + n_entities, out_dim)
+                out = self.activation(self.W(torch.cat([g.ndata['node'], g.ndata['N_h']], dim=1)))
 
             elif self.aggregator_type == 'bi-interaction':
                 # Equation (8) & (9)
-                out1 = self.activation(self.W1(g.ndata['node'] + g.ndata['N_h']))                       # (n_users + n_entities, out_dim)
-                out2 = self.activation(self.W2(g.ndata['node'] * g.ndata['N_h']))                       # (n_users + n_entities, out_dim)
+                out1 = self.activation(self.W1(g.ndata['node'] + g.ndata['N_h']))
+                out2 = self.activation(self.W2(g.ndata['node'] * g.ndata['N_h']))
                 out = out1 + out2
             else:
                 raise NotImplementedError
@@ -119,17 +114,9 @@ class KGAT(nn.Module):
         self.W_action4 = nn.Linear(
             self.last_dimension,
             2 * self.last_dimension)
-        # self.W_action5 = nn.Linear(
-        #     self.conv_dim_list[0] + self.conv_dim_list[1] + self.conv_dim_list[2] + self.conv_dim_list[3] +
-        #     self.conv_dim_list[4], 2 * self.last_dimension, bias=False)
-        # # nn.init.xavier_uniform_(self.W_action1.weight)
-        # # nn.init.xavier_uniform_(self.W_action2.weight)
-        # # nn.init.xavier_uniform_(self.W_action3.weight)
-        # # nn.init.xavier_uniform_(self.W_action4.weight)
-        # # nn.init.xavier_uniform_(self.W_action5.weight)
-        # self.action_list = [self.W_action1, self.W_action2, self.W_action3, self.W_action4, self.W_action5]
 
-    def hop(self, g):    #add hop function-- HS
+
+    def hop(self, g):    #add hop function
         adjacency=g.adjacency_matrix(scipy_fmt="csr")
         print("made adjacency")
         csr_Imatrix = scipy.sparse.identity(self.n_entities + self.n_users)  # np.identity(self.n_entities+self.n_users)
@@ -208,14 +195,6 @@ class KGAT(nn.Module):
 
             # Equation (11)
             all_embed = torch.cat(all_embed, dim=1)
-            # if index == 1:
-            #     all_embed = self.W_action1(all_embed)
-            # elif index == 2:
-            #     all_embed = self.W_action2(all_embed)
-            # elif index == 3:
-            #     all_embed = self.W_action3(all_embed)
-            # else:
-            #     all_embed = self.W_action4(all_embed)
             result.append(all_embed)
 
 
@@ -299,9 +278,6 @@ class KGAT(nn.Module):
 
         l2_loss = _L2_loss_mean(user_embed) + _L2_loss_mean(item_pos_embed) + _L2_loss_mean(item_neg_embed)
         loss = cf_loss + self.cf_l2loss_lambda * l2_loss
-        if torch.isnan(loss):
-            print("loss is already nan")
-            # print(pos_score, neg_score, torch.isnan(user_embed).any(), torch.isnan(item_pos_embed).any(), torch.isnan(item_neg_embed).any(), torch.isnan(second_pos_embed).any(), np.unique(action1.numpy()))
         return loss
 
 
