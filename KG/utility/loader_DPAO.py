@@ -20,8 +20,8 @@ class DataLoaderKGAT(object):
         self.kg_batch_size = args.kg_batch_size
 
         data_dir = os.path.join(args.data_dir, args.data_name)
-        train_file = os.path.join(data_dir, 'ab_train.txt')
-        test_file = os.path.join(data_dir, 'ab_test.txt')
+        train_file = os.path.join(data_dir, 'train.txt')
+        test_file = os.path.join(data_dir, 'test.txt')
         kg_file = os.path.join(data_dir, "kg_final.txt")
 
         self.cf_train_data, self.train_user_dict = self.load_cf(train_file)
