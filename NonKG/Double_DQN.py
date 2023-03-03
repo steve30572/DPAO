@@ -686,7 +686,6 @@ class Double_DQN(object):
                 self.state_item = []
 
 
-            print(len(self.dictionary['user']), "length of dictionary", len(self.dictionary_neg['user']))
             if len(self.dictionary['user']) >= self.count_train:
                 user = torch.tensor(self.dictionary['user'], dtype=int)  # , dtype=int)
                 item = torch.tensor(self.dictionary['item'], dtype=int)  # , dtype=int)
@@ -832,7 +831,6 @@ class Double_DQN(object):
             # print("saving the loss")
             loss_save.append(loss)
         if self.deepcopy_count % 900 == 0:#if self.train_t % 100 == 0:  #2000 should be hyperparamter---HS
-            print("it is going to be changed")
             self.target_estimator_user = deepcopy(self.q_estimator_user)
             self.target_estimator_item = deepcopy(self.q_estimator_item)
         self.deepcopy_count+=1
