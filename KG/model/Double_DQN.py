@@ -414,7 +414,6 @@ class Double_DQN(object):
             loss_item = self.train_item()
             self.state_user = []
             self.state_item = []
-            print(len(self.dictionary['user']))
             if len(self.dictionary['user']) >= self.count_train:
                 user = torch.tensor(self.dictionary['user'], dtype=int).detach()
                 item = torch.tensor(self.dictionary['item'], dtype=int).detach()
@@ -450,7 +449,6 @@ class Double_DQN(object):
 
     def train_KGAT(self,g):
         self.KGAT.train()
-        print("length of the KGAT_train is: ",len(self.KGAT_train), len(self.KGAT_train_neg))
         result=[]
         count = 0
         if len(self.KGAT_train) == 0 or len(self.KGAT_train_neg) == 0:
@@ -498,10 +496,8 @@ class Double_DQN(object):
         state_batch = self.KGAT.entity_user_embed(state_batch)
         loss = self.q_estimator_user.update(state_batch, action_batch, target_batch)
         if self.total_t==self.epsilon_decay-2:
-            print("saving the loss")
             loss_save.append(loss)
         if self.deepcopy_count % 5000 == 0:
-            print("it is going to be changed")
             self.target_estimator_user = deepcopy(self.q_estimator_user)
             self.target_estimator_item = deepcopy(self.q_estimator_item)
         return loss
@@ -574,7 +570,6 @@ class Double_DQN(object):
         neighbor_user = np.setdiff1d(neighbor_user, neighbor_for_check)
         next_state_bool = True
         if len(neighbor_user) == 0:
-            print("why nobody.. something is wrong")
             next_state_bool = False
             return 0, next_state_bool
         else:
@@ -603,7 +598,6 @@ class Double_DQN(object):
         neighbor_item = np.setdiff1d(neighbor_item, neighbor_for_check)
         next_state_bool = True
         if len(neighbor_item) == 0:
-            print("why nobody in item...something wrong")
             next_state_bool = False
             return 0, next_state_bool
         else:
