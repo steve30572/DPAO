@@ -154,7 +154,6 @@ class DataLoaderKGAT(object):
         g = dgl.DGLGraph()
         g.add_nodes(n_nodes)
         g.add_edges(kg_data['t'], kg_data['h'])
-        g.readonly()
         g.ndata['id'] = torch.arange(n_nodes, dtype=torch.long)
         g.edata['type'] = torch.LongTensor(kg_data['r'])
         return g
