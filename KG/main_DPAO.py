@@ -179,6 +179,9 @@ def train(args):
     recall_list = []
     ndcg_list = []
 
+    model = KGAT(args, data.n_users, data.n_items, data.n_entities, data.n_relations, user_pre_embed, item_pre_embed)
+    model.to(device)
+
     # train model
     for epoch in range(args.n_epoch + 1):
         time0 = time()
