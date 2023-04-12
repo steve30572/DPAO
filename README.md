@@ -27,18 +27,9 @@ The code has been tested running under Python 3.9.15. The required packages are:
 ###### Amazon-Book
 ```
 cd KG
-python main_DPAO.py --data_name amazon-book --conv_dim_list '[64, 64, 64, 64]' --mess_dropout '[0.1, 0.1, 0.1, 0.1]'
+python main_DPAO.py --data_name amazon-book --conv_dim_list '[128, 64, 32, 16]' --mess_dropout '[0.1, 0.1, 0.1, 0.1]' --aggregation_type 'gcn' --evaluate_every 1 --lr 0.0001 --n_epoch -1
 ```
-##### Yelp2018
-```
-cd KG
-python main_DPAO.py --data_name yelp2018 --conv_dim_list '[64, 64, 32, 16]' --mess_dropout '[0.1, 0.1, 0.1, 0.1]'
-```
-##### Last-FM
-```
-cd KG
-python main_DPAO.py --data_name last-fm --conv_dim_list '[64, 64, 64, 64]' --mess_dropout '[0.1, 0.1, 0.1, 0.1]'
-```
+
 
 #### Non-KG-based
 

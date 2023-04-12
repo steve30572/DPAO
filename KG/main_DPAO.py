@@ -182,6 +182,9 @@ def train(args):
     model = KGAT(args, data.n_users, data.n_items, data.n_entities, data.n_relations, user_pre_embed, item_pre_embed)
     model.to(device)
 
+    if args.n_epoch == -1:
+        exit(0)
+
     # train model
     for epoch in range(args.n_epoch + 1):
         time0 = time()
