@@ -626,7 +626,7 @@ class Double_DQN(object):
         epsilon = self.epsilons[min(self.total_t, self.epsilon_decay - 1)]
         a = np.ones(self.action_num, dtype=float) * epsilon / self.action_num
         state=torch.unsqueeze(state,0)
-        q_values = self.q_estimator_user.predict_nograd(state)[0]
+        q_values = self.q_estimator_item.predict_nograd(state)[0]
         best_action = np.argmax(q_values)
         a[best_action] += (1.0 - epsilon)
         action = np.random.choice(np.arange(len(a)), p=a)
