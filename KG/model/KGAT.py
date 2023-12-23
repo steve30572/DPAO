@@ -270,7 +270,7 @@ class KGAT(nn.Module):
 
         # Equation (12)
         pos_score = torch.sum(user_embed * item_pos_embed, dim=1)  # (cf_batch_size)
-        neg_score = torch.sum(user_embed * item_neg_embed, dim=1)  # (cf_batch_size)
+        neg_score = torch.sum(item_pos_embed * item_neg_embed, dim=1)  # (cf_batch_size)
 
         # Equation (13)
         cf_loss = (-1.0) * F.logsigmoid(pos_score - neg_score)
